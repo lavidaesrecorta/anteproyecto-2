@@ -1,0 +1,43 @@
+\documentclass[12pt]{report}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{pdflscape}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{minted}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{svg}
+\svgpath{{./images/}}
+
+\setlength{\parindent}{0cm}
+
+\title{ANÁLISIS DE LA SINCRONIZACIÓN NEURONAL  ENTRE REDES TREE PARITY MACHINE MULTICAPAS PARA SU USO EN ESQUEMAS DE INTERCAMBIO DE LLAVES}
+\author{Rodrigo Alonso Jiménez Gómez} 
+
+\makeatletter 
+\let\newtitle\@title
+\let\newauthor\@author
+\makeatother
+
+\AtBeginDocument{\renewcommand{\contentsname}{Contenido}}
+\AtBeginDocument{\renewcommand{\listtablename}{Índice de tablas}}
+\AtBeginDocument{\renewcommand{\listfigurename}{Índice de Figuras}}
+\AtBeginDocument{\renewcommand{\tablename}{Tabla}}
+
+\bibliographystyle{ieeetr}
+\begin{document}
+\include{portada} %Obligatorio
+\input{chapters/1_intro/intro}
+\input{chapters/2_marco_teorico/marco}
+\input{chapters/3_planteamiento_problema/problema}
+\input{chapters/4_descripcion_investigacion/descripcion}
+\include{chapters/5_marco_referencia/marco_ref}
+\bibliography{../bib/library}
+\end{document}

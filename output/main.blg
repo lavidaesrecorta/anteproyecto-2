@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: ieeetr.bst
+A level-1 auxiliary file: portada.aux
+A level-1 auxiliary file: chapters/5_marco_referencia/marco_ref.aux
+Database file #1: ../bib/library.bib
+Warning--I didn't find a database entry for "cve2016-2183"
+Warning--empty journal in greenbergCrashOverrideMalware2017
+Warning--empty institution in ibmCostDataBreach2023
+Warning--empty institution in barker-2019
+Warning--empty publisher in doi:10.1142/9789812704634_0044
+Warning--empty year in doi:10.1142/9789812704634_0044
+Warning--empty publisher in chen-2005
+Warning--empty booktitle in inbook
+Warning--empty publisher in inbook
+Warning--empty journal in secure_ad_hoc
+You've used 36 entries,
+            1876 wiz_defined-function locations,
+            704 strings with 11464 characters,
+and the built_in function-call counts, 9845 in all, are:
+= -- 979
+> -- 363
+< -- 0
++ -- 135
+- -- 99
+* -- 703
+:= -- 1349
+add.period$ -- 39
+call.type$ -- 36
+change.case$ -- 35
+chr.to.int$ -- 0
+cite$ -- 45
+duplicate$ -- 522
+empty$ -- 934
+format.name$ -- 99
+if$ -- 2398
+int.to.chr$ -- 0
+int.to.str$ -- 36
+missing$ -- 35
+newline$ -- 114
+num.names$ -- 38
+pop$ -- 139
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 382
+stack$ -- 0
+substring$ -- 663
+swap$ -- 221
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 9
+while$ -- 100
+width$ -- 38
+write$ -- 333
+(There were 10 warnings)

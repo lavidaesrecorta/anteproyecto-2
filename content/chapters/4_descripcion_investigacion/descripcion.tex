@@ -1,0 +1,72 @@
+\chapter{Descripción de la Investigación}
+\section{Objetivos}
+\subsection{Objetivo General}
+Analizar el uso estímulos sin traslape en la entrada de cada
+neurona de una capa oculta, en el término del proceso de
+sincronización neuronal entre dos redes Multilayer Tree Parity
+Machine.
+\subsection{Objetivo Específico}
+\begin{enumerate}
+    \item Analizar la literatura relacionada con la sincronización de dos redes Multilayer Tree Parity Machine.
+    \item Diseñar un algoritmo para la sincronización de dos redes Multilayer Tree Parity Machine con estímulos binarios y no binarios.
+    \item Implementar algoritmo para la sincronización de dos redes Multilayer Tree Parity Machine con estímulos binarios y no binarios.
+    \item Evaluar experimentalmente los efectos del traslape en los estímulos de entrada en cada neurona de una capa oculta, en el proceso de sincronización neuronal de dos redes Multilayer Tree Parity Machine.
+\end{enumerate}
+\subsection{Alcances y Limitaciones}
+El proyecto contempla los siguientes alcances y limitaciones:
+\begin{itemize}
+    \item La sincronización de las redes MTPM se hara en forma local, para lograr establecer la duración del proceso de sincronización de distintas arquitecturas y escenarios.
+    \item El proyecto se limita a la implementación y la ejecución de pruebas para validar la efectividad de cada uno de los escenarios propuestos.
+    % \item El proyecto no implementa pruebas de seguridad frente a ataques de sincronización no autorizada en contra de las redes MTPM.
+\end{itemize}
+\section{Resultados Esperados}
+En este trabajo de investigación se pretende:
+\begin{enumerate}
+    \item Código fuente, manual de usuario y diseño de topología para realizar pruebas de sincronización en lotes.
+    \item Escribir un artículo científico, para ser sometido en una revista científica de corriente principal con índice WoS o Scopus.
+    \item Un nuevo algoritmo para el intercambio de claves utilizando Multilayer Tree Parity Machine con estímulos no binarios.
+\end{enumerate}
+\section{Justificación de la Investigación}
+El protocolo de autenticación es la primera barrera de defensa frente a un atacante. Validar la identidad de un usuario permite una restricción del control del dispositivo y sus capacidades para afectar otros equipos a su alcance, sin embargo, los protocolos de autenticación requieren de un elemento secreto conocido solo por el usuario y el sistema que valida su identidad. Para poder intercambiar el elemento secreto en entornos inseguros, se han desarrollado diversas técnicas de intercambio de llaves que han permitido el desarrollo de protocolos que logran mantener la confidencialidad de las llaves compartidas.
+
+En la literatura se pueden encontrar protocolos  de autenticación que utilizan criptografía asimétrica y criptografía de bajo costo computacional. Sin embargo, los protocolos de autenticación basados en criptografía asimétrica utilizan matemáticas complejas (por ejemplo, factorización de números gigantes y cálculos de logaritmos discretos) y supone una barrera de entrada para dispositivos con pocas capacidades de procesamiento \cite{suarez-albelaPracticalPerformanceComparison2018}. Es por esto que se han propuesto una serie de alternativas que combinan técnicas establecidas y nuevos avances orientados a dispositivos con bajo poder computacional \cite{aghiliSecLAPSecureLightweight2019,krishnasrijaLightweightMutualTransitive2023,yangIBASecureEfficient2023}. La criptografía neuronal utilizando Tree Parity Machines (TPM) nace como una alternativa viable, debido a que utiliza operaciones matemáticas simples y no requiere del uso de grandes números enteros. Sin embargo, las redes TPM tienen vulnerabilidades inherentes a la estructura elegida por sus parámetros, es decir, el número de neuronas, el número de entradas para cada neurona y el rango de valores que pueden tomar los pesos sinápticos \cite{ruttor_neural_2006}. 
+Existen una serie de avances que demuestran cómo la seguridad de una red TPM puede ser mejorada al introducir cambios a la estructura, que incluyen el aumento de capas ocultas, la implementación de nuevas reglas de aprendizaje y variaciones particulares a la hora de implementar un protocolo basado en redes TPM \cite{dongNeuralCryptographyBased2020,sarkarArtificialNeuralSynchronization2021,sarkarChaosBasedMutualSynchronization2021,stypinskiSynchronizationTreeParity2022}.
+Durante los últimos años, varias propuestas han sugerido distintos usos para las redes TPM, sin embargo la falta de detalles con respecto a su implementación y aplicabilidad a distintos entornos pone en duda su viabilidad en dispositivos con restricciones en su capacidad de procesamiento. A continuación, la tabla \ref{tabla:patentes} muestra algunas de las patentes relevantes.
+
+
+\renewcommand{\arraystretch}{1.2} % Espaciado vertical
+\begin{longtable}{@{}p{2.5cm}p{3.5cm}p{6cm}p{2.5cm}@{}}
+    \caption{Patentes sobre criptografía neuronal con Tree Parity Machines (TPM)} \label{tabla:patentes} \\
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} & \textbf{Enlace} \\
+    \midrule
+    \endfirsthead
+    
+    \multicolumn{4}{c}{{\tablename\ \thetable{} -- continuación}} \\
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} & \textbf{Enlace} \\
+    \midrule
+    \endhead
+    
+    \bottomrule
+
+    \endfoot
+    
+    US 20210250812 & \textit{Decentralized Infrastructure Methods and Systems} & Propone el uso de redes TPM para el intercambio de una clave secreta para ser utilizada en transacciones dentro de un sistema descentralizado. & \href{https://patentscope.wipo.int/search/en/detail.jsf?docId=US333356190}{patentscope - wipo.int} \\
+    
+    CN 112751671 & \textit{Novel Key Exchange Method Based on Tree Parity Machine} & Propone un método de intercambio de claves basado en redes TPM, utilizando técnicas de ventana deslizante y un registro de desplazamiento con retroalimentación lineal para acelerar el proceso de sincronización neuronal. & \href{https://patentscope.wipo.int/search/en/detail.jsf?docId=CN323900278&_cid=P21-LJA6AR-24417-1}{patentscope - wipo.int} \\
+    
+    IN 201741024592 & \textit{Secure System for Debit/Credit Card Swiping Using OTP for Banking Systems Applications} & Propone un método de autenticación basado en redes TPM para la generación de contraseñas de un solo uso (OTP). & \href{https://patentscope.wipo.int/search/en/detail.jsf?docId=IN236857682&_cid=P21-LJA6AR-24417-1}{patentscope - wipo.int} \\
+    
+    US 20210336779 & \textit{Method and Apparatus for Generating Secret Key Based on Neural Network Synchronization} & Método de generación de clave secreta mediante sincronización de redes TPM, intercambiando codewords entre dispositivos y compartiendo información de restauración. & \href{https://patentscope.wipo.int/search/en/detail.jsf?docId=US339764553&_cid=P21-LJA6AR-24417-1}{patentscope - wipo.int} \\
+    
+    AU 2021104099 & \textit{A Neural Cryptography Based on Fast Learning Rule} & Propone usar criptografía neuronal con redes TPM para compartir de forma segura una clave secreta, ajustando pesos sinápticos según la sincronización de resultados y reduciendo el tiempo de negociación. & \href{https://patentscope.wipo.int/search/en/detail.jsf?docId=AU333401020&_cid=P21-LJA6AR-24417-1}{patentscope - wipo.int} \\
+    
+    US 20230269079 & \textit{Device and Method for Sharing Secret Key Based on Neural Network} & Método para compartir una clave secreta entre dos redes TPM mediante sincronización neuronal, utilizando imágenes del servidor y cliente para generar semillas y lograr la clave compartida. & \href{https://patentscope.wipo.int/search/en/detail.jsf?docId=US405665557&_cid=P10-LM0QCA-59456-1}{patentscope - wipo.int} \\
+
+\end{longtable}
+
+En este trabajo se propone integrar diversas modificaciones previamente sugeridas que han demostrado ser efectivas para mejorar la seguridad y el rendimiento en la sincronización de redes neuronales, enfocándose en el uso de redes MTPM con estímulos no binarios. El objetivo es ofrecer una alternativa viable a los algoritmos tradicionales de intercambio de claves, aprovechando que las redes MTPM requieren menor capacidad de cómputo y memoria para restablecer una clave secreta.
+
+Finalmente, se busca validar experimentalmente el algoritmo desarrollado mediante un caso de estudio, utilizando como métrica principal el número de estimulaciones necesarias para lograr la sincronización entre dos redes MTPM. Esta métrica permitirá cuantificar la eficiencia computacional del algoritmo, ofreciendo una evaluación concreta de su rendimiento en términos de carga de trabajo y uso de recursos.
+

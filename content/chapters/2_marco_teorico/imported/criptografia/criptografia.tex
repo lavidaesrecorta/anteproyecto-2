@@ -1,0 +1,202 @@
+\section{Criptografía}
+La criptografía es la ciencia que busca ocultar el significado de los mensajes, de manera que solo pueda ser entendido por el destinatario. Su contraparte es el criptoanálisis, la ciencia que intenta romper un criptosistema y descubrir el significado de los mensajes encriptados, lo que resulta crucial para determinar la seguridad de la comunicación. Ambos conforman a la criptología, el estudio de los mensajes secretos. En esta sección, se resumen los conceptos básicos de la criptografía presentados en el libro \cite{paar-2011}.
+
+\subsection{Aritmética Modular}
+La aritmética modular es un sistema de operaciones matemáticas en el que los números se reducen al resto de su división por un número entero, denominado módulo. Este enfoque permite trabajar con una colección de números finita y es fundamental en el área de la criptografía. La aritmética modular ha sido utilizada desde la antigüedad para la creación de sistemas de encriptación, como por ejemplo el cifrado César, el cual se presume haber sido el método utilizado por Julio César para comunicarse con su ejército. Hoy en día es utilizado por diversos algoritmos criptográficos, como Rivest-Shamir-Adleman (RSA), Diffie-Hellman Key Exchange (DHKE) y Elliptic Curve Cryptography (ECC).
+
+\subsubsection{Operación Modulo}
+La operación módulo permite expresar formalmente la relación entre un número entero y su residuo al ser dividido por un módulo positivo.
+Para $a,r,m \in \mathbb{Z}$ (en donde $\mathbb{Z}$ es el conjunto de todos los números enteros) y $m>0$, la operación modulo se define como:  
+$$a \equiv r \text{ mod } m$$
+si $m$ divide $a-r$, $m$ es llamado el módulo y $r$ es llamado el resto o residuo.
+
+\subsubsection{Clases de Equivalencia}
+La operación módulo, al aplicarse con un módulo $m > 0$, genera un número finito de posibles resultados, específicamente los enteros entre $0$ y $m - 1$. Esta propiedad permite representar cualquier número entero como un elemento dentro de este conjunto finito, mediante la asignación de su residuo módulo $m$. De esta manera, los enteros pueden agruparse en clases de equivalencia: conjuntos que comparten el mismo residuo al ser divididos por $m$. 
+Esto significa que para cada módulo $m$ y un número $a$, exite un número infinto de residuos válidos. Por ejemplo:
+\begin{itemize}
+    \item $12 \text{ mod } 9 = 3$
+    \item $21 \text{ mod } 9 = 3$
+    \item $-6 \text{ mod } 9 = 3$
+\end{itemize}
+De esta manera, se forma la clase de equivalencia:
+$$ \{\dots, -6, 3, 12, 21, \dots \} $$
+Además, existen otras ocho clases de equivalencia:
+$$ \{\dots, -9, 0, 9, 18, \dots \} $$
+$$ \{\dots, -10, 1, 10, 19, \dots \} $$
+$$\vdots$$
+$$ \{\dots, -1, 8, 17, 26, \dots \} $$
+
+Esta relación de equivalencia puede expresarse mediante la notación $$ 12 \equiv 21 \text{ mod } 9 $$ utilizando los dos primeros ejemplos mencionados anteriormente.
+
+\subsubsection{Anillos de Enteros}
+
+El conjunto de clases de equivalencia módulo $ m $ permite definir operaciones de suma y multiplicación entre sus elementos. Estas operaciones se realizan tomando representantes de cada clase, operando normalmente y luego aplicando el módulo $ m $ al resultado. Con estas reglas, el conjunto forma lo que se conoce como un anillo de enteros módulo $ m $, representado por $ \mathbb{Z}_m$ , una estructura cerrada bajo la suma y la multiplicación, que cumple propiedades similares a las del conjunto de los enteros, pero dentro de un conjunto finito. Para el módulo $ m $, el anillo de enteros $ \mathbb{Z}_m$ consiste de:
+\begin{itemize}
+    \item La colección $ \mathbb{Z}_m = \{0,1,2,\dots,m-1 \}$
+    \item Las operaciones de suma y multiplicación para cualquier $a,b \in \mathbb{Z}_m$, de manera que:
+    \begin{itemize}
+        \item $a+b \equiv c \text{ mod } m$, $c \in \mathbb{Z}_m$
+        \item $a \times b \equiv d \text{ mod } m$, $c \in \mathbb{Z}_m$
+    \end{itemize} 
+\end{itemize}
+
+Por ejemplo, utilizando el anillo de enteros $\mathbb{Z}_9$:
+\begin{itemize}
+    \item $6 + 8 = 14 \equiv 5 \text{ mod } 9$
+    \item $6 \times 8 = 48 \equiv 3 \text{ mod } 9$
+\end{itemize}
+
+El método de encriptación César, o por desplazamiento, utiliza la operación de suma en un anillo de enteros de tamaño igual al número de caracteres utilizados por el idioma del mensaje, de modo que cada letra se transforma sumando un valor fijo y luego reduciendo el resultado módulo el tamaño del alfabeto.  
+
+\subsection{Criptografía Simétrica}
+La criptografía simétrica consiste en dos participantes que intercambian una misma llave para la encriptación y desencriptación de un sistema. 
+Esto implica que: 
+\begin{itemize}
+    \item La llave es secreta, los participantes deben asegurarse de un atacante no adquiera esta llave, ya que le permitiría revelar el contenido del mensaje.
+    \item Los participantes deben encontrar una forma de acordar una clave secreta antes de lograr una comunicación segura. Una vez establecida una clave, esta puede ser utilizada para mantener una comunicación segura.
+\end{itemize}
+La criptografía simétrica constituye el esquema más antiguo para el resguardo de la confidencialidad de la información, así, todos los sistemas criptográficos utilizados desde la antigüedad se basaban exclusivamente en este enfoque. No obstante, la distribución segura de llaves representa un desafío considerable, especialmente al intentar implementar un criptosistema simétrico a través de Internet.
+Ejemplos de criptografía simétrica incluyen:
+\begin{itemize}
+    \item Método de encriptación por Sustitución
+    \item Método de encriptación César o por desplazamiento
+    \item Método de encriptación Vigenère
+    \item Método de encriptación Data Encryption Standard (DES), su variación 3DES y su sucesor AES
+\end{itemize}
+La criptografía simétrica puede dividirse en dos categorías principales: Encriptado por flujo y Encriptación por bloques.
+\subsubsection{Encriptado por Flujo}
+\hfil \\
+El encriptado por flujo encripta cada bit de manera individual. Para lograr esto, se agrega un bit de un \textit{flujo de llaves} a un bit de texto plano. La encriptación por flujo puede ser síncrono, es decir, el flujo de llaves depende solamente de la clave secreta, como también puede ser asíncrono, en donde el flujo de llaves depende tanto de la clave como del texto encriptado. La seguridad de la encriptación por flujo depende completamente del flujo de llaves, lo que lo convierte en el problema central a la hora de diseñar un criptosistema de encriptado por flujo \cite{paar-2011}.
+
+Los encriptacións de flujo son empleados principalmente en sistemas embebidos y equipos con capacidades computacionales limitadas. Un ejemplo de esto es el encriptación A5/1 utilizado en las redes de comunicación celular  Global System for Mobile Communications (GSM) \cite{paar-2011}.  
+
+\subsubsection{Encriptación por Bloques}
+\hfil \\
+La encriptación por bloques encripta un bloque completo de bits de texto plano con la misma llave. Esto implica que la encriptación de cualquier bit de texto plano en un bloque determinado depende de cada bit presente en el mismo bloque. El tamaño del bloque impacta proporcionalmente en la seguridad del criptosistema, es por esto que estándares modernos requieren del uso de una clave secreta al menos 128 bits de longitud, como es el caso de AES. Las encriptaciones por bloques son los esquemas principalmente utilizados en la comunicación a través de Internet \cite{paar-2011}.
+
+\subsubsection{Algoritmos DES y AES}
+El algoritmo Data Encryption Standard (DES) fué un algoritmo popular desarrollado por IBM con ayuda de la Agencia de Seguridad Nacional de los Estados Unidos (National Security Agency, NSA) y publicado por el Instituo Nacional de Estándares y Tecnología (NIST por sus siglas en inglés, en ese tiempo llamada NBS) en 1977. El algoritmo hoy es considerado inseguro debido a su reducida longitud de llaves, dando paso al uso de su variacion 3DES y el desarrollo de su sucesor AES.
+
+El algoritmo DES es un encriptación por bloques de 64 bits de longitud, con una clave de 56 bits. Por cada bloque, el encriptación se divide en 16 rondas que ejecutan la misma operación. Utiliza dos principios fundamentales para la construcion del algorimtos de encriptación seguros:
+\begin{itemize}
+    \item Confusión: Una operación de encriptación en donde la relación entre la clave secreta y el texto encriptación no es directa.
+    \item Difusión: Una operación de encriptación en donde la influencia de un simbolo en texto plano es distribuida sobre muchos símbolos de texto encriptación, con el objetivo de ocultar las propiedades estadísticas del texto plano.
+\end{itemize}
+A pesar de haber sido el estándar recomendado por el gobierno de los Estados Unidos, el algoritmo DES fue sujeto a diversas críticas debido a el uso de una clave de 56 bits, volviendo el encriptación vulnerable a ataques de fuerza bruta. Sumado a esto, los parámetros de diseño de las cajas S —las funciones no-lineales son cruciales para la seguridad del algoritmo— se mantuvieron en secreto por años. Esto creó la especulación de un posible ataque analítico solo conocido por los diseñadores del algoritmo, capaz de explotar las propiedades matemáticas de las cajas S.
+
+Eventualmente, en el año 1998 la \textit{Electronic Frontier Foundation} (EFF) creó una máquina capaz de ejecutar un ataque de fuerza bruta basado en hardware sobre el algoritmo DES. La máquina fué apodada \textit{DeepCrack}, fué la prueba de las vulnerabilidades del algoritmo que obligaron a elevar el estándar de seguridad en el año 1999, cambiando el algoritmo DES por la variante 3DES.
+
+Sin embargo, la variante 3DES, como su nombre indica, es la repetición del proceso DES en tres iteraciones. Esto incrementa la seguridad del encriptación a 112-bits, pero el proceso recibe un impacto en su rendimiento, especialmente en implementaciones de software.  Esto, combinado con su reducido tamaño de bloques, motivó al Instituo Nacional de Estándares y Tecnología de los Estados unidos (NIST) a buscar un nuevo algoritmo capaz de reemplazar a DES. 
+
+\begin{figure}
+    \centering
+    \noindent\includesvg[width=0.8\linewidth]{criptografia/AES.drawio.svg}
+    \caption{Proceso de encriptación mediante AES. Figura original de \cite{paar-2011}. }
+    \label{fig:AES_example}
+\end{figure}
+
+En el año 2001, el NIST publicó el estándar AES, que reemplazaría a DES y 3DES. Es un algoritmo de encriptación por bloques que admite llaves de longitud de 128, 192 y 256 bits, utiliza un sistema de rondas tal como lo hace DES, sin embargo, debido a las diferencias en la estructura interna de cada ronda, AES utiliza comparativamente menos rondas para lograr un mejor estándar de seguridad \cite{paar-2011}. Cada ronda del algoritmo AES utiliza capas de operaciones, cada una opera sobre todos los bits presentes en la ruta de datos del algoritmo, o también referido como el estado del algoritmo. Existen tres tipos de capas, las cuales están presentes en todas las rondas a excepción de la primera, tal como muestra la figura \ref{fig:AES_example}. 
+\begin{enumerate}
+    \item Capa de adición de llaves: una clave de 128 bits es derivada de la clave original, y es sumada (mediante la operación XOR) al estado del algoritmo.
+    \item Capa de sustitución de bits (caja S): Cada elemento del estado es transformado no-linealmente utilizando tablas de búsqueda con propiedades matemáticas especiales. Esto introduce \textit{confusión} en la ruta de datos del algoritmo.
+    \item Capa de difusión: Otorga difusión sobre todos los bits del estado del algoritmo. Consiste en dos subcapas que ejecutan operaciones lineales, una permuta los datos a nivel de bytes (Subcapa \textit{ShiftRow}) y la segunda mezcla bloques de cuatro bytes mediante una operación matricial (Subcapa \textit{MixColumn}).  
+\end{enumerate}
+
+En el año 2016, una vulnerabilidad de alto riesgo indexada con el código \textit{CVE-2016-2183} demostró que tanto el algoritmo DES y su variante 3DES son vulnerables a ataques que permiten la obtención del texto plano \cite{cve2016-2183}, lo que eventualmente provocaría que ambos algoritmos fuesen declarados como obsoletos para uso moderno por el NIST en el año 2019, favoreciendo el uso de AES para aplicaciones modernas \cite{barker-2019}.
+
+\pagebreak
+
+\subsection{Criptografía Asimétrica}
+El algoritmo Diffie-Hellman, propuesto en 1976, fue la primera solución propuesta a los problemas presentes en la criptografía simétrica y dió paso a un nuevo esquema, hoy conocido como criptografía asimétrica. En este esquema, no es necesario que la clave que posee la persona que encripta el mensaje sea secreta. Lo crucial es que el receptor, solo pueda desencriptar utilizando una clave secreta. Para implementar un sistema de este tipo, el receptor publica una clave de encriptación pública que es conocida por todos. El receptor también posee una clave secreta correspondiente, la cual es utlilizada para el desencriptación. Por ende, el receptor tiene una clave $k$ que consiste de dos partes, una clave pública $k_{pub}$ y una clave privada $k_{pr}$. Los algoritmos de encriptación asimétrica o algoritmos clave pública pueden ser utilizados para:
+\begin{itemize}
+    \item Establecimiento de llaves a través de un canal inseguro.
+    \item Proveer No-Repudiación e integridad del mensaje transmitido usando firmas digitales.
+    \item Identificación de los participantes a través de firmas digitales en conjunto con protocolos de desafío-respuesta.
+    \item Encriptación de mensajes.
+\end{itemize}
+A pesar de sus ventajas de seguridad, la criptografía asimétrica requiere de uso intenso de los recursos computacionales, provocando que en la práctica el uso de la criptografía asimétrica para encriptación de datos sea mucho menos conveniente que el uso de esquemas simétricos. Sin embargo, al proveer mecanismos de seguridad como la No-Repudiación y la capacidad de establecer llaves en canales inseguros, se suelen implementar ambos esquemas a través de protocolos híbridos. 
+
+Estos algoritmos pueden clasificarse según el problema computacional subyacente en el que se basa su seguridad. Es decir, cada familia de algoritmos criptográficos asimétricos depende de un tipo específico de problema matemático difícil de resolver. Solo existen tres familias de algoritmos relevantes para su uso práctico:
+\begin{itemize}
+    \item Factorización de Números Enteros de gran tamaño
+    \item Logaritmo Discreto en Campos Finitos y
+    \item Logaritmo Discreto sobre Curvas Elípticas
+\end{itemize}
+
+\subsubsection{Algoritmo Diffie-Hellman}
+\hfil \\
+El algoritmo Diffie-Hellman (DF o DFKE) fué el primer algoritmo de criptografía asimétrica, publicado en 1976 por Whitfield Diffie y Martin Hellman.
+Este algoritmo se basa en la intractabilidad computacional del problema del logaritmo discreto, cuya resolución resulta inviable para valores suficientemente grandes.
+En términos matemáticos, dado $g \in \mathbb{Z}^*_p $ y $p$ un número primo, calcular $g^x \text{ mod } p$ es una operación trivial, pero debido a que se trata de una función de una sola vía, resulta computacionalmente difícil invertirla para determinar $x$ a partir de $g^x \text{ mod } p$.
+
+El algoritmo de intercambio de llaves Diffie-Hellman utiliza un proceso de dos partes, siendo la primera un proceso de configuración en donde se definen los parámetros que serán intercambiados mediante un canal inseguro, para su posterior uso en la segunda parte del proceso, en donde se establece el intercambio de llaves.
+El proceso de configuración es el siguiente:
+\begin{enumerate}
+    \item Escoger un número primo $p$ de gran tamaño. El tamaño de $p$ define el tamaño de la clave pública e impacta directamente en la seguridad del intercambio. El Instituto Nacional de Estándares y Tecnología de los Estados Unidos (NIST) recomienda una clave pública de al menos 2048 bits de longitud.
+    \item Escoger un número entero $a \in \{ 2,3, \dots,p-2 \}$.
+    \item Publicar $p$ y $a$.
+\end{enumerate}
+La segunda parte del proceso de intercambio utiliza la propiedad de conmutatividad de la exponenciación:
+$$ k = (a^x)^y \equiv (a^y)^x \text{ mod } p $$
+Es decir, utilizando los parámetros publicados en la primera fase del intercambio, Alice calcula $$B^a \equiv (a^b)^a \equiv a^{ab} \text{ mod } p$$ y Bob calcula $$A^b \equiv (a^a)^b \equiv a^{ab} \text{ mod } p$$
+
+La figura \ref{fig:DHKE_example} es un ejemplo que muestra la segunda parte del intercambio llaves.
+
+\begin{figure}[H]
+    \centering
+    % \noindent\includegraphics[width=\linewidth]{criptografia/RSA.drawio.png}
+    \noindent\includesvg[width=\linewidth]{criptografia/DHKE_proceso.drawio.svg}
+    \caption{Ejemplo de intercambio de llaves DHKE entre Alice y Bob. Ejemplo original de \cite{paar-2011}. }
+    \label{fig:DHKE_example}
+\end{figure}
+
+
+
+\subsubsection{Algoritmo RSA}
+\hfil \\
+El algoritmo RSA (Por sus autores Ron Rivest, Adi Shamir y Leonard Adleman) es un algoritmo basado en la factorización de números enteros de gran tamaño en sus factores primos.
+En esencia, RSA se basa en la multiplicación de dos números primos grandes, una operación computacionalmente sencilla; sin embargo, factorizar el producto resultante es un problema considerablemente más complejo.
+
+La función de encriptación del algoritmo RSA, dada una clave pública $(n,e)=k_{pub}$ y un texto plano $x$, puede expresarse de la siguiente forma:
+$$y=e_{k_{pub}}(x) \equiv x^e \text{ mod } n$$
+donde $x,y \in \mathbb{Z}_n$.
+
+La función de desencriptación del algoritmo RSA, dada una clave privada $d=k_{pr}$ y el texto encriptación $y$, puede expresarse de la siguiente forma:
+$$x=d_{k_{pr}}(y) \equiv y^d \text{ mod } n$$
+donde $x,y \in \mathbb{Z}_n$.
+
+Para generar la clave pública $k_{pub} = (n,e)$ y privada $k_{pr} = (d)$, se utiliza el siguiente algoritmo:
+\begin{enumerate}
+    \item Elegir dos números primos de gran tamaño, $p$ y $q$.
+    \item Calcular $n=p \cdot q$.
+    \item Calcular $\phi(n) = (p-1)(q-1)$.
+    \item Seleccionar el exponente público $e \in \{1,2,\dots,\phi(n)-1\}$ de manera que $$gcd(e,\phi(n)) = 1$$
+    \item Calcular la clave privada $d$, de manera que $$d \cdot e \equiv \text{ mod } \phi(n)$$
+\end{enumerate}
+
+
+
+La figura \ref{fig:RSA_example} es un ejemplo de comunicación segura utilizando el algoritmo RSA para el encriptación y desencriptación del mensaje. Nótese que en aplicaciones reales los parámetros suelen ser números de gran tamaño, por ejemplo, para los parámetros $p$ y $q$ suelen usarse una longitud de 512 bits, de manera que el módulo $n$ sea de al menos 1024 bits.
+\begin{figure}[H]
+    \centering
+    % \noindent\includegraphics[width=\linewidth]{criptografia/RSA.drawio.png}
+    \noindent\includesvg[width=\linewidth]{criptografia/RSA_proceso.drawio.svg}
+    \caption{Ejemplo de intercambio de mensaje encriptación mediante RSA entre Alice (emisor) y Bob (receptor). Ejemplo original de \cite{paar-2011}. }
+    \label{fig:RSA_example}
+\end{figure}
+
+El algoritmo RSA es ampliamente utilizado en firmas digitales y encriptación de datos de tamaño pequeño, pero no está diseñado para reemplazar algoritmos de encripción simétrica, debido a su alto costo computacional.
+
+
+\subsection{Criptografía Neuronal}
+A inicios del nuevo milenio una serie de publicaciones sobre las
+dinámicas de la sincronización neuronal y sus posibles aplicaciones para el
+problema de intercambio de llaves han dado lugar a la creación de la
+criptografía neuronal \cite{ruttor_neural_2006}. La criptografía neuronal utiliza
+propiedades observadas en la sincronización de redes neuronales del tipo Tree
+Parity Machine mediante el aprendizaje mutuo. El aprendizaje mutuo permite
+la sincronización de los pesos sinápticos en las redes participantes sin la
+necesidad de compartirlos de manera explícita por el canal, permitiendo utilizar
+los pesos sinápticos como la llave secreta. 
+
+A diferencia de otros esquemas de intercambio de llaves, las redes neuronales utilizan operaciones matemáticas simples y de bajo costo computacional, permitiendo su uso en equipos de baja potencia y en donde los estándares de seguridad requieren de una rotación de llaves continua.

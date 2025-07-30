@@ -1,0 +1,111 @@
+\section{Redes Neuronales}
+Esta subsección resume los áspectos básicos sobre Redes Neuronales Artificiales (RNA) presentados por \cite{haykin-2009}, y los principios de la sincronización neuronal por \cite{ruttor_neural_2006}. 
+\subsection{Definición y Principios Básicos de las Redes Neuronales Artificiales} 
+Las RNA son modelos matemáticos que se inspiran en la estructura del cerebro humano, reconociendo a éste como un computador de naturaleza diferente a la de un computador digital convencional. El cerebro es una estructura altamente compleja, no lineal y paralela, constituida de múltiples unidades de procesamiento simples, llamadas neuronas. En \cite{haykin-2009} se definen las redes neuronales de la siguiente manera: 
+
+''Una red neuronal es un procesador distribuido de manera altamente paralela, compuesto por unidades de procesamiento simples, que posee una inclinación natural hacia el almacenamiento del conocimiento experiencial y su posterior utilización. Se asemeja al cerebro principalmente de dos maneras:
+    \begin{enumerate}
+        \item El conocimiento es adquirido por la red a partir de su entorno mediante un proceso de aprendizaje.
+        \item La fuerza de las conexiones entre neuronas, conocidas como pesos sinápticos, se utiliza para almacenar el conocimiento adquirido.''
+    \end{enumerate}
+
+Las RNA son diseñadas para modelar la manera en que el cerebro ejecuta una tarea específica de interés. Generalmente, se implementa mediante componentes electrónicos, simulaciones a través de software, o una mezcla de software con aceleración por hardware especializado. 
+
+A través de un algoritmo de aprendizaje, se modifican los pesos sinápticos de la red para alcanzar un comportamiento deseado. Al modificar los pesos sinápticos, efectivamente se modifica el efecto que ejerce un estímulo de entrada sobre una neurona. Esto permite aumentar, disminuir e incluso anular o revertir la respuesta de una neurona hacia un estímulo determinado. 
+
+Las RNA ofrecen una serie de ventajas y capacidades frente a otros sistemas de control inteligente, las cuales han sido ampliamente reconocidas en la literatura. En el contexto de este trabajo, es pertinente destacar las siguientes propiedades clave:
+\begin{enumerate}
+    \item No linealidad: Cada neurona puede ser lineal o no-lineal. La no-linealidad distribuida presente en su estructura le permite a una RNA modelar fenómenos de naturaleza no-lineal. Esta propiedad resulta fundamental para la seguridad de una red Tree Parity Machine debido a que actúa como una barrera de complejidad matemática, impidiendo que la relación entre las entradas y las salidas sea directamente invertible.
+    \item Mapeo de Entrada-Salida: Las RNA adquieren conociemiento generando una relación entre los estímulos de entrada y la señal de salida de la red. Esta propiedad resulta fundamental al momento de lograr una sincronización de dos redes Tree Parity Machine, debido a que para una misma señal de entrada dos redes idénticas deberían producir exactamente la misma salida. Debido a esto, cuando dos RNA no han sido sincronizadas, si para una misma señal tienen el mismo comportamiento (la misma señal de salida) pueden modificar sus pesos sinápticos utilizando una regla de aprendizaje especial y repetir el proceso hasta lograr la sincronización.
+\end{enumerate}
+
+\subsection{Modelo de Neurona Artificial y Funciones de Activación}
+La neurona es la unidad de procesamiento fundamental de las RNA. En la figura \ref{fig:neuron-model}. se pueden identificar los tres elementos básicos del modelo neuronal: 
+\begin{enumerate}
+    \item Una colección de sinápsis o enlaces, cada uno caracterizado por un \textit{peso} o \textit{fuerza} propia. Cada señal $x_j$ para la entrada $j$ de la neurona $k$, es multiplicado por el peso sináptico correspondiente $w_{k,j}$.
+    \item Un \textit{combinador lineal} que suma las señales de entrada multiplicados por su correspondiente peso sináptico.
+    \item Una función de activación, que limita la amplitud de la salida de una neurona.
+\end{enumerate}
+
+Como se aprecia en la figura \ref{fig:neuron-model}, el modelo contiene un término llamado \textit{bias}, denotado por $b_k$. El bias $b_k$ tiene el efecto de aumentar o disminuir la entrada total de la función de activación. 
+
+\begin{figure}[H]
+    \centering
+    \noindent\includesvg[width=0.9\linewidth]{mtpm/neurona.drawio.svg}
+    \caption{Modelo de neurona. Figura original adaptada de \cite{haykin-2009}. }
+    \label{fig:neuron-model}
+\end{figure}
+
+
+En términos matemáticos, la neurona $k$ presentada en la figura \ref{fig:neuron-model} puede ser descrita de la siguiente forma:
+$$u_k = \sum_{j=1}^{m} w_{k,j} x_j \quad v_k = u_k + b_k \quad y_k = \varphi(v_k)$$
+en donde $x_1, x_2, ..., x_m$ son las señales de entrada; $w_{k,1}, w_{k,2}, ..., w_{k,m}$ son los pesos sinápticos de la neurona $k$; $u_k$ (que no se muestra en la figura \ref{fig:neuron-model}) es la salida del combinador lineal; $b_k$ es el bias; $\varphi(\cdot)$ es la función de activación; e $y_k$ es la señal de salida de la neurona. 
+
+La función de activación de una neurona define su reacción frente a un estímulo de entrada, esta función puede ser de carácter lineal o no-lineal. La elección de la función de activación depende del problema que la red intenta resolver. Algunas de las funciones de activación más utilizadas incluyen
+\begin{itemize}
+    \item Función Límite o Heaviside:
+        $$
+        \varphi(v) = \begin{cases}
+            1 & \quad \text{si}\quad v \ge 0 \\
+            0 & \quad \text{si}\quad v < 0
+        \end{cases} 
+        $$
+    \item Función Sigmoidal:
+        $$
+        \varphi(v) = \frac{1}{1+exp(-av)}
+        $$
+        donde $a$ es el parámetro de inclinación
+\end{itemize}
+
+\subsection{Procesos de Aprendizaje y Sincronización en Redes Neuronales}
+Los procesos de aprendizaje que utilizan las redes neuronales para ajustar su comportamiento se pueden categorizar en dos: \textbf{aprendizaje con un profesor} y \textbf{aprendizaje sin un profesor}.
+
+El aprendizaje con un profesor, también conocido como aprendizaje supervisado, emplea datos del entorno en el que opera la red neuronal —generalmente en forma de un conjunto de entrenamiento— para guiar su proceso de aprendizaje. En este esquema, se genera una señal de error que representa la diferencia entre la salida producida por la red y la salida esperada proporcionada por el profesor, correspondiente a una entrada del conjunto de entrenamiento.
+ 
+El aprendizaje sin un profesor se divide en dos subcategorías: \textbf{aprendizaje por refuerzo} y \textbf{aprendizaje no supervisado}.
+
+El aprendizaje por refuerzo se basa en la presencia de un módulo evaluador que transforma una señal de refuerzo primaria, proveniente del entorno, en una señal de refuerzo heurística. Esta señal guía el ajuste de la red neuronal, incentivando el proceso de aprendizaje. De esta forma, el sistema puede interactuar con su entorno y desarrollar la capacidad de aprender a partir de las consecuencias de sus acciones.
+
+El aprendizaje no supervisado, también conocido como aprendizaje autoorganizado, no utiliza un crítico ni un profesor para guiar el proceso de aprendizaje. En su lugar, se emplea una medida independiente de la tarea que evalúa la calidad de la representación que la red debe aprender. A partir de esta medida, los parámetros libres de la red, tales como los pesos y bias, se ajustan para capturar las regularidades estadísticas presentes en los datos de entrada, mediante una regla de aprendizaje.  Como resultado, la red desarrolla la capacidad de generar representaciones internas que codifican características relevantes del entorno, permitiéndole formar automáticamente nuevas clases o categorías.
+
+La \textit{Teoría de Aprendizaje de Hebb} es la regla de aprendizaje más antigua y conocida de todas. Fue propuesto en un contexto neurobiológico, que más tarde sería reformulado como una regla de dos partes:
+\begin{enumerate}
+    \item Si dos neuronas en ambos lados de una conexión son activadas de manera simultánea, entonces la fuerza de esa conexión es selectivamente aumentada.
+    \item Si dos neuronas en ambos lados de una conexión son activadas de manera asíncrona, entonces la fuerza de esa conexión es selectivamente disminuida (o eliminada).
+\end{enumerate}
+En términos matemáticos se puede formular la regla de aprendizaje Hebbian considerando los pesos sinápticos $w_{k,j}$ de la neurona $k$ con señales presinápticas y postsinápticas $x_j$ y $y_k$, respectivamente. De esta manera, el ajuste aplicado al peso sináptico $w_{k,j}$ en el momento $n$ puede ser expresado de la siguiente forma general:
+$$\Delta w_{k,j}(n) = f(y_k(n), x_j(n))$$
+donde $f(,)$ es una función que depende de las señales presinápticas y postsinápticas. Esta ecuación admite muchas variaciones, las cuales todas califican como regla de aprendizaje Hebbian. Se podría considerar la forma más simple de regla de aprendizaje Hebbian como:  
+$$\Delta w_{k,j}(n) = \eta y_k(n) x_j(n))$$
+en donde $\eta$ es una constante positiva que determina la \textit{tasa de aprendizaje}.
+
+\subsection{Redes Tree Parity Machine}
+
+Las redes Tree Parity Machine (TPM) son una arquitectura de redes neuronales artificiales diseñadas para explorar procesos de aprendizaje mutuo mediante un proceso de sincronización que permite igualar el estado interno (los pesos sinápticos) entre dos redes a través de un proceso iterativo.
+
+Las redes Tree Parity Machines utilizan la función signo como función de activación, definida de la siguiente forma:
+$$
+\varphi(v) = \begin{cases}
+    1 & \quad \text{si}\quad v > 0 \\
+    -1 & \quad \text{si}\quad v \le 0
+\end{cases} 
+$$
+Al ser una función no-lineal, esto permite que la relación entre los estímulos de entrada y la señal de salida de la red no sea directamente invertible, generando una barrera de seguridad necesaria para el proceso de sincronización.
+
+En las redes Tree Parity Machine se utiliza un aprendizaje autoorganizado utilizando una regla Hebbian diseñada para tomar en cuenta la influencia de ambas redes presentes en el proceso de sincronización, la cual \cite{ruttor_neural_2006} escribe con una notación ligeramente diferente a la presentada anteriormente, de la siguiente forma:
+$$ w^{+}_{i,j} = g(w_{i,j} + x_{i,j} \cdot \tau \cdot \Theta(\sigma_{i}\cdot\tau) \cdot \Theta(\tau^A\cdot\tau^B)) $$
+En donde $w_{i,j}$ corresponde al peso sináptico de la neurona $i$ en la entrada $j$, $x_{i,j}$ es el estímulo de entrada $j$ para la neurona $i$, $\tau$ corresponde a la salida de la red en ajuste, $\tau^A$ es la salida de la red $A$ y $\tau^B$ es la salida de la red $B$. $\sigma_i$ es la salida de la neurona $i$. La ecuación anterior también emplea dos funciones:
+\begin{enumerate}
+    \item $g(\cdot)$ - Función de limitación de pesos sinápticos: $$ g(x) = 
+    \begin{cases}
+    -L &\quad x \le -L \\
+    x &\quad -L < x < L \\
+    L &\quad x \ge L \\
+    \end{cases}$$
+    \item $\Theta(\cdot)$ - Función Heaviside: $$ \Theta(x) \begin{cases}
+    \text{0,} &\quad\text{si} \quad x \le 0 \\
+    \text{1,} &\quad\text{si} \quad x > 0
+    \end{cases} $$
+\end{enumerate}
+
+La función $g(\cdot)$ se encarga de limitar el valor de los pesos sinápticos en el rango $[-L,L]$ para evitar un crecimiento explosivo. La función Heaviside se encarga de determinar el ajuste en base a la relación que existe entre el estímulo de entrada de una neurona y el valor producido por ambas redes. El término $\Theta(\tau^A\cdot\tau^B)$ provoca que sólo se realicen ajustes si ambas redes en el proceso de sincronización tienen la misma salida,  es decir, reaccionan de la misma manera a un mismo estímulo de entrada.

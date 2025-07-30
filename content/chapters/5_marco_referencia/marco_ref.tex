@@ -1,0 +1,286 @@
+\chapter{Marco de Referencia}
+\section{Cuadro Sinóptico}
+\section{Estado del Arte}
+
+\subsection{Criptografia Neuronal}
+
+La criptografía neuronal nace en el año 2002 con la introducción del trabajo por Wolfgang Kinzel e Ido Kanter \cite{kinzel2002interactingneuralnetworkscryptography}. Este trabajo explora la sincronización entre dos redes neuronales mediante el aprendizaje mutuo, es decir, utilizando una regla de aprendizaje en donde los ajustes son condicionados por las salidas de ambas redes. El artículo propone el uso de redes neuronales del tipo Tree Parity Machine (TPM) debido a la dificultad que implica a un atacante establecer una relación directa entre las salidas de las redes y el vector de estímulos de entrada (datos que serán transmitidos a través de un canal público).
+Para lograr la sincronización en un estado paralelo (es decir $\underline{w}^A = \underline{w}^B$) utiliza la siguiente regla de aprendizaje para la red $A$:
+$$ w^{A+}_{i,j} = g(w^{A}_{i,j} + x^{A}_{i,j} \cdot \tau^A \cdot \Theta(\sigma^A_{i}\cdot\tau^A) \cdot \Theta(\tau^A\cdot\tau^B)) $$
+y de igual manera para la red $B$:
+$$ w^{B+}_{i,j} = g(w^{B}_{i,j} + x^{B}_{i,j} \cdot \tau^B \cdot \Theta(\sigma^B_{i}\cdot\tau^B) \cdot \Theta(\tau^A\cdot\tau^B)) $$
+En donde $w^{A}_{i,j}$ es el pesos sináptico asociado a la entrada $j$ de la neurona $i$ de la red $A$, $\tau^A$ es la salida de la red $A$ y $x^{A}_{i,j}$ es el estímulo que ingresa a la red $A$, en el estímulo $j$ de la neurona $i$, el cual tiene valores idénticos para ambas redes $A$ y $B$.
+El trabajo reconoce inmediatamente el potencial que la sincronización neuronal tiene en el campo de la criptografía como una alternativa al uso de teoría de números para el intercambio de llaves, acuñando el término criptografía de redes neuronales.
+
+Durante ese mismo año \cite{PhysRevE.66.066135} establece un método genérico para el análisis del aprendizaje mutuo en máquinas de paridad con estructura de árbol (o también \textit{Tree Parity Machines} o TPM). Este trabajo prueba que la sincronización de dos redes TPM necesita de un número finito de pasos intercambiando las entradas y salidas de ambas redes. También establece que un atacante que intenta sincronizar con la red sin participar del proceso de aprendizaje es capaz de sincronizar con las redes, sin embargo, suele hacerlo utilizando el doble tiempo que aquellas redes que participan del intercambio de llaves.
+
+Más tarde \cite{10.1007/3-540-36178-2_18} sería el primer trabajo en introducir los ataques genéticos, geométricos y probabilísticos.
+\begin{itemize}
+    \item El ataque genético utiliza algoritmos genéticos, en el cual se simula una gran población de redes neuronales. Este algoritmo elimina a las redes cuyas salidas no coinciden con las redes presentes en el intercambio.
+    \item El ataque geométrico utiliza la interpretación geométrica de la acción del perceptrón para extrapolar información sobre sus pesos sinápticos asociados.
+    \item El ataque probabilístico calcula un nivel de confianza asociada a cada salida de las neuronas ocultas de la red a partir de una red TPM atacante.
+\end{itemize}
+
+Para mejorar la seguridad del proceso de intercambio, el trabajo de \cite{doi:10.1142/9789812704634_0044} presenta un protocolo de intercambio de llaves y describe las siguientes generalizaciones para la optimización del proceso de sincronización:
+\begin{itemize}
+    \item Paquetes de bits: Los participantes generan una colección de entradas sobre la cual se calculan las salidas, reduciendo el tiempo de sincronización.
+    \item Varios participantes: El sistema puede extenderse más alla de dos participantes.
+    \item Generación de entradas: Los vectores de estímulos de entrada pueden ser combinados con otros datos presentes en el proceso de sincronización (como por ejemplo, la señal de salida de la red) para maximizar la aleatoriedad de los datos compartidos a través del canal público.
+    \item Permutación de pesos sinápticos: Se puede mejorar la seguridad del canal aplicando permutaciones sobre los pesos sinápticos, sin embargo, el tiempo de sincronización aumenta.
+\end{itemize}
+
+Años más tarde, \cite{chen-2005} define un esquema de emisión de llaves basado en redes neuronales utilizando redes TPM. El trabajo detalla un protocolo que permite el establecimiento de una llave secreta utilizando un generador de números pseudo-aleatorio. Este generador se encarga de la creación de estímulos de manera que ambas redes pueden sincronizar sin comunicar los estímulos que son utilizados para realizar ajustes de pesos sinápticos.
+
+El trabajo de \cite{Ruttor_2005} introduce consultas para el cálculo de estímulos de entrada, a diferencia del uso de entradas aleatorias. Los autores proponen el uso de consultas, a partir de las cuales se pueden generar los estímulos de entrada que alimentan a ambas redes. Las consultas buscan inducir un campo local $h_k$ en una neurona oculta $k$ previamente definido, para aumentar la seguridad del sistema frente a ataques que utilizan el campo inducido para corregir a una red atacante (como por ejemplo, el ataque geométrico).  
+El trabajo propone dos ecuaciones para la generación de una consulta, las cuales utilizan el estado interno actual de la red.
+\begin{equation}
+    c_{k,l} = \left\lfloor\frac{n_{k,l}+1}{2}+\frac{1}{2l}\left(\sigma_k H \sqrt{N} - \sum_{j=l+1}^{L}j(2c_{k,j}-n_{k,j})\right) \right\rfloor
+\end{equation}
+\begin{equation}
+    c_{k,l} = \left\lceil\frac{n_{k,l}-1}{2}+\frac{1}{2l}\left(\sigma_k H \sqrt{N} - \sum_{j=l+1}^{L}j(2c_{k,j}-n_{k,j})\right) \right\rceil
+\end{equation}
+En donde $L$ es el límite del rango de valores de los pesos sinápticos, $H$ es el valor del campo local que se desea inducir, $N$ es la cantidad de entradas de la neurona $k$, $\sigma_k$ es la salida de la neurona $k$; $c_{k,l}$ es la cantidad de veces que $w_{k,j} \cdot x_{k,j} = l$, con $l \in [-L,L]$; y $n_{k,l} = c_{k,l} + c_{k,-l}$.
+La ecuación utilizada para generar la consulta es elegida aleatoriamente durante el proceso de sincronización. 
+
+Un año más tarde, los autores en \cite{ruttor_neural_2006} determinaron experimentalmente que el rango de valores para los pesos sinápticos $L$ tenía un impacto en la seguridad del proceso de sincronización, aumentando la dificultad para un atacante de lograr una sincronización de manera exponencial, sin embargo también aumentando el tiempo necesario para lograr la sincronización de manera polinomial. El trabajo prueba el impacto del parámetro $L$ frente a ataques simples, geométricos, genéticos y de mayoría. Mientras que en \cite{ruttorDynamicsNeuralCryptography2007} se demuestra que el tiempo de sincronización aumenta exponencialmente al aumentar el parámetro $L$, cuando la cantidad de neuronas ocultas es mayor a tres.
+
+\subsection{Variaciones de Arquitecturas MTPM}
+\hfil \\
+
+Si bien las redes Tree Parity Machine han demostrado ser una solución eficiente para el intercambio de llaves, su estructura de una capa oculta, impone ciertas limitaciones en términos de capacidad de aprendizaje, robustez y seguridad. La resistencia de una red TPM frente a ataques de sincronización no autorizada depende principalmente de la profundidad de sus pesos sinápticos y de su arquitectura, es decir, la cantidad de neuronas y entradas en su capa oculta \cite{ruttorDynamicsNeuralCryptography2007}. Alterar cualquiera de los parámetros mencionados anteriormente puede mejorar la seguridad del intercambio, pero impactando negativamente en el tiempo de sincronización, lo que ha impulsado la búsqueda de alternativas para mejorar la seguridad o la eficiencia del proceso de sincronización.
+
+En \cite{dongNeuralCryptographyBased2020}, se explora el uso de números complejos en las entradas, pesos sinápticos y salidas de la red neuronal. Esta nueva estructura es denominada “Complex-Valued Tree Parity Machine” (CVTPM). Sus resultados muestran una gran mejora en la seguridad con respecto a las TPM, aunque requieren de un tiempo de sincronización más extenso.
+
+El trabajo de \cite{shishniashviliEnhancingIoTSecurity2020} define una red “Multi-layer feedforward con elementos TPM”, utilizando entradas sin traslape para la primera capa y traslape completo entre las entradas de las capas ocultas. El trabajo propone el uso de tres capas ocultas para dificultar la sincronización no autorizada de un atacante.  
+
+Otros trabajos han explorado la adición de nuevas capas ocultas y modificaciones al algoritmo de aprendizaje. En \cite{sarkarArtificialNeuralSynchronization2021} se utilizan dos capas ocultas y una regla de aprendizaje basada en el algoritmo “Whale Optimization Algorithm” (WOA). Sus resultados muestran tiempos de sincronización más cortos que una red CVTPM, con mejoras de seguridad con respecto a una red TPM simple que utiliza los mismos parámetros.
+
+En \cite{jeongNeuralCryptographyBased2021} se explora una versión generalizada de las redes TPM, llamada “Vector-Valued Tree Parity Machine” (VVTPM), que es capaz de generalizar otras variaciones propuestas con anterioridad. El trabajo compara los tiempos de sincronización entre las TPM, CVTPM y VVTPM. A través de los resultados, demuestran la capacidad de las VVTPM de generalizar y replicar los resultados obtenidos en otras arquitecturas.
+
+En \cite{sarkarChaosBasedMutualSynchronization2021} se comparan los tiempos de sincronización entre redes VVTPM y una variación que incluye tres capas ocultas y la regla de aprendizaje basada en el algoritmo WOA. Esta última variación, llamada “Triple-Layer Tree Parity Machine” (TLTPM), muestra tiempos de sincronización más acotados que otras arquitecturas, tanto para el tiempo mínimo como máximo de sincronización.
+
+En \cite{stypinskiSynchronizationTreeParity2022} se ha demostrado que la utilización de estímulos no binarios puede reducir los tiempos de sincronización y aumentar la seguridad del sistema.
+
+\subsection{Implementaciones de Criptografía Neuronal}
+\hfil \\
+Los trabajos presentados en la subsección anterior sentaron las bases teóricas sobre las dinámicas de sincronización entre dos redes TPM, lo cual permitió abrir el camino hacia el diseño de implementaciones prácticas de criptografía neuronal. Estas implementaciones buscan aprovechar las propiedades de sincronización para establecer llaves compartidas de manera segura en distintos entornos, incluyendo dispositivos embebidos, sistemas distribuidos y redes IoT. La Tabla~\ref{tabla:resumen-tpm} resume distintos trabajos que implementan redes TPM en esquemas criptográficos, abarcando propuestas desde el año 2005 en adelante.
+\begin{longtable}{|c|p{2cm}|p{8.5cm}|}
+    \caption{Resumen de trabajos que implementan redes TPM en esquemas criptográficos.}
+    \label{tabla:resumen-tpm} \\
+    \hline
+    \textbf{Año} & \textbf{Referencia} & \textbf{Descripción} \\
+    \hline
+    \endfirsthead
+    
+    \hline
+    \multicolumn{3}{|c|}{\textit{(Continuación de la Tabla \ref{tabla:resumen-tpm})}} \\
+    \hline
+    \textbf{Año} & \textbf{Referencia} & \textbf{Descripción} \\
+    \hline
+    \endhead
+    
+    \hline
+    \multicolumn{3}{|r|}{\textit{Continúa en la siguiente página}} \\
+    \hline
+    \endfoot
+    
+    \hline
+    \endlastfoot
+    
+    2023 & \cite{dey-2023} & Un esquema de intercambio de llaves que utiliza un método novedoso de verificación para el proceso de sincronización, basado en la transmisión de llaves parciales. \\
+    \hline
+    2020 & \cite{inbook} & Propone un esquema de encriptación para agentes móviles utilizando un intercambio de llaves basado en redes TPM. El esquema de encriptación utiliza la sincronización neuronal para la generación de una llave secreta, la cual es utilizada en el algoritmo de cifrado New Tiny Encryption Algorithm (NTEA). \\
+    \hline
+    2020 & \cite{secret_img} & Propone el uso de criptografía neural para generar la llave utilizada en la encriptación y desencriptación de imágenes secretas. \\
+    \hline
+    2020 & \cite{group_key_2020} & Propone dos estructuras para agrupar distintos usuarios (cada uno con una red TPM) para esquemas para el establecimiento y manejo de llaves grupales. \\
+    \hline
+    2017 & \cite{65_CMOS} & Una implementación en hardware que permite el establecimiento de llaves y su restablecimiento a través de circuitos CMOS de 65 nanómetros. \\
+    \hline
+    2008 & \cite{chenTreeParityMachinebased2008} & Propone dos protocolos de autenticación mediante contraseñas de un solo uso (One-Time Password, OTP) basados en TPM para la generación y el restablecimiento de la contraseña. \\
+    \hline
+    2007 & \cite{muhlbachSecureAuthenticatedCommunication2007} & Una solución de intercambio de llaves autenticado y sin latencia, resistente a ataques físicos sobre hardware. Permite la autenticación de los participantes del bus de datos, así como la encriptación de la comunicación chip a chip. \\
+    \hline
+    2007 & \cite{secure_ad_hoc} & Un esquema de acuerdo de llaves grupales sin necesidad de un servidor central, mediante la sincronización distribuida en pares de dispositivos. \\
+    \hline
+    2005 & \cite{chen-2005} & Un esquema de intercambio de llaves que utiliza funciones hash para verificar la sincronización entre dos TPMs. \\
+    \hline
+    
+\end{longtable}
+
+% Las Tree Parity Machines, a pesar de ser una sólida alternativa para los algoritmos de cifrado actuales, tienen ciertas debilidades de seguridad que dependen de los parámetros que definen la estructura de la red neuronal. Los parámetros N y L, que definen el número de estímulos de entrada y rango de los pesos sinápticos, generan un impacto directo en el tiempo de sincronización y seguridad contra un atacante pasivo, como fué demostrado en \cite{ruttor_neural_2006}. Existen ciertas variaciones propuestas que permiten mejorar la seguridad de la red neuronal y el tiempo necesario para sincronizar, que incluyen: El uso de números complejos, aumentar el número de capas ocultas y combinar las redes TPM con otras técnicas utilizadas en protocolos de autenticación.
+
+% En \cite{dongNeuralCryptographyBased2020}, se explora el uso de números complejos en las entradas, pesos sinápticos y salidas de la red neuronal, esta nueva estructura es denominada “Complex-Valued Tree Parity Machine” (CVTPM). Sus resultados muestran una gran mejora en la seguridad con respecto a las TPM; sin embargo, suelen tener un tiempo de sincronización más extenso. 
+
+% Otros trabajos han explorado la adición de nuevas capas ocultas y modificaciones al algoritmo de aprendizaje. En \cite{sarkarDeepLearningGuided2021} se utilizan dos capas ocultas y una regla de aprendizaje basada en el algoritmo “Whale Optimization Algorithm” (WOA). Sus resultados muestran tiempos de sincronización más cortos que una red CVTPM, con mejoras de seguridad con respecto a una red TPM simple que utiliza los mismos parámetros. 
+
+% En \cite{jeongNeuralCryptographyBased2021} se explora una versión generalizada de las redes TPM, llamada “Vector-Valued Tree Parity Machine” (VVTPM), que es capaz de generalizar otras variaciones propuestas con anterioridad. El trabajo compara los tiempos de sincronización entre las TPM, CVTPM y VVTPM. A través de los resultados, demuestran la capacidad de las VVTPM de generalizar y replicar los resultados obtenidos en trabajos anteriores.  
+
+% En trabajos posteriores, \cite{sarkarFasterSynchronizationTriple2021} compara los tiempos de sincronización entre redes VVTPM y una variación que incluye tres capas ocultas y la regla de aprendizaje basada en el algoritmo WOA. Esta última variación, llamada “Triple-Layer Tree Parity Machine” (TLTPM), demuestra tiempos de sincronización más acotados que trabajos anteriores, tanto para el tiempo mínimo y máximo de sincronización.
+
+
+% Se ha demostrado que la utilización de estímulos no binarios puede reducir los tiempos de sincronización y aumentar la seguridad del sistema, como fue demostrado en \cite{stypinskiSecurityNeuralNetworkbased2023}.
+
+
+
+\section{Metodología}
+\subsection{Tipo de Metodología}
+
+La metodología utilizada en esta investigación es del tipo experimental: Se diseñarán y realizarán simulaciones desarrollando un software de pruebas en un entorno controlado. 
+
+La investigación realizará un estudio cuantitativo que comparará las ventajas que presentan las redes Tree Parity Machine Multilayer con estímulos no binarios frente a las redes Tree Parity Machine tradicionales, en términos de seguridad. Las métricas que permiten medir la seguridad de un protocolo que utiliza sincronización neuronal son las siguientes:
+\begin{enumerate}
+    \item La cantidad de iteraciones necesarias para lograr la sincronización entre los participantes del intercambio.
+    \item El porcentaje de sincronizaciones exitosas para un atacante.
+\end{enumerate}
+
+\subsection{Caso de Estudio}
+La investigación realizará un estudio cuantitativo que comparará las ventajas
+que presentan las redes Tree Parity Machine Multilayer con estímulos no
+binarios frente a las redes Tree Parity Machine tradicionales, en términos de
+eficiencia. Las métricas que permiten medir la eficiencia de un proceso de sincronización neuronal son las siguientes:
+\begin{itemize}
+    \item La cantidad de iteraciones necesarias para lograr la sincronización entre dos redes MTPM.
+    \item El porcentaje de sincronizaciones que finalizan antes de un número determinado de iteraciones.
+\end{itemize}
+
+\section{Caso de Estudio}
+En el marco de esta investigación, resulta necesario explorar mediante
+una implementación práctica el rendimiento de los tres escenarios propuestos para las redes MTPM.
+En este contexto, se requiere de un caso de estudio que permita generar
+resultados relevantes que logren ilustrar las capacidades de la propuesta de
+abordar los desafíos relevantes a equipos IoT de uso general.
+
+Para entender la naturaleza de la sincronización de las redes MTPM, se opta por la creación de una suite de software compuesta por un motor de simulación y una interfaz gráfica basada en navegadores web diseñada para aprovechar al máximo las capacidades integradas al motor de simulación. El objetivo de esta suite de software es generar una base de datos con estadísticas sobre distintas sesiones finalizadas, que permitan analizar la eficiencia de distintas arquitecturas y el impacto de la adición de nuevas capas para tres escenarios propuestos: Redes con conexiones entre capas sin traslape, con traslape parcial y traslape completo (completamente conectadas). 
+
+Para lograr los objetivos del proyecto, el motor de simulación debe cumplir los siguientes requisitos:
+\begin{itemize}
+    \item Lograr una sincronización entre dos redes MTPM para los tres escenarios y reglas de aprendizaje.
+    \item Almacenar los datos de cada intento de sincronización, sea fallido o exitoso, para el cálculo de estadísticas relevantes. 
+    \item Permitir el monitoreo en tiempo real del estado de las sincronizaciones en curso.
+    \item Permitir la implementación de nuevos escenarios y reglas de aprendizaje sin la necesidad de introducir cambios que afecten a las implementaciones previas (también conocidos como \textit{breaking changes}).
+\end{itemize}
+
+Finalmente, se validará la propuesta mediante el desarrollo de una librería para dispositivos IoT que permita utilizar las redes MTPM en dispositivos IoT. La propuesta debe permitir la elección de cualquiera de las tres reglas de aprendizaje (Hebbian, Anti-Hebbian y Random-Walk) y los tres escenarios propuestos. 
+
+Para cumplir los requisitos se optan por lenguajes y marcos de trabajo presentados en la tabla \ref{tabla:framework-mtpm}. 
+\noindent\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|p{4cm}|p{6cm}|}
+    \hline
+    \textbf{Software} & \textbf{Lenguaje} & \textbf{Marco de Trabajo} \\
+    \hline
+    Motor de Simulación & \textit{Go} & Concurrencia utilizando librería \textit{conc}\\
+    \hline
+    Interfaz Gráfica & \textit{Typescript} & \textit{SvelteKit}\\
+    \hline
+    Librería IoT & \textit{C} & Módulo para \textit{MicroPython}\\
+    \hline
+    \end{tabular}
+    \caption{Descripción de herramientas de dessarrollo utilizadas.}
+    \label{tabla:framework-mtpm}
+\end{table}
+
+La figura \ref{fig:back-front-process} muestra las interacciones diseñadas entre la interfaz gráfica y el motor de simulación.
+\begin{figure}[H]
+    \centering
+    % \noindent\includegraphics[width=\linewidth]{criptografia/RSA.drawio.png}
+    \noindent\includesvg[width=0.6\linewidth]{mtpm/back-front-process.drawio.svg}
+    \caption{Interacciones entre la interfaz gráfica y el motor de simulación.}
+    \label{fig:back-front-process}
+\end{figure}
+
+Para el motor de simulación será necesario un dispositivo multi-núcleo, con
+capacidades de memoria superiores o iguales a los 8GB DDR4 y con
+conectividad cableada.
+
+La librería IoT será diseñada para la plataforma \textbf{ESP32}, un dispositivo Soc utilizado ampliamente tanto por el sector aficionado como profesional y académico.
+
+El software desarrollado para el proyecto será
+construido sobre lenguajes y librerías open source, con licencias libres que
+permitan el desarrollo del programa sin la necesidad de adquirir permisos
+adicionales.
+
+\section{Tareas}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}p{1cm}p{1.5cm}p{12cm}@{}}
+  \caption{Objetivos y tareas del proyecto} \label{tabla:objetivos-tareas} \\
+  \toprule
+  \textbf{Obj.} & \textbf{Tarea} & \textbf{Descripción} \\
+  \midrule
+  \endfirsthead
+
+  \multicolumn{3}{c}{\tablename\ \thetable{} -- continuación} \\
+  \toprule
+  \textbf{Obj.} & \textbf{Tarea} & \textbf{Descripción} \\
+  \midrule
+  \endhead
+
+  \bottomrule
+  \endfoot
+
+  1 & 1.1 & Búsqueda de artículos, usando el Metabuscador UCN, Springer, WoS, Scopus, IEEE, APS y ScienceDirect. \\
+    & 1.2 & Clasificación de artículos según su relevancia y año. \\
+    & 1.3 & Discusión de los artículos según su relevancia, en particular focalizándose en los parámetros que definen la arquitectura de una red TPM. \\
+
+  2 & 2.1 & Definir la secuencia de pasos para llevar a cabo el proceso de sincronización entre dos MTPM. \\
+    & 2.2 & Comparar el diseño frente a algoritmos de sincronización de una sola capa. \\
+
+  3 & 3.1 & Seleccionar las herramientas, lenguajes de programación y librerías necesarias para desarrollar el algoritmo propuesto. \\
+    & 3.2 & Desarrollar un software de simulación para determinar un rango de parámetros óptimos para el caso de estudio, que definen la estructura de la Multilayer Tree Parity Machine. \\
+    & 3.3 & Desarrollar software para el análisis de los resultados de las simulaciones de sincronización. \\
+
+  4 & 4.1 & Definir las métricas de evaluación del rendimiento del algoritmo, en términos de las iteraciones necesarias para lograr la sincronización y el porcentaje de éxito para un atacante. \\
+    & 4.2 & Evaluar el rendimiento para las arquitecturas de redes MTPM, mediante el uso del software de simulación desarrollado. \\
+    & 4.4 & Análisis de los resultados experimentales y comparación entre los escenarios propuestos. \\
+
+\end{longtable}
+
+A continuación, se detallan las tareas indicadas en la tabla \ref{tabla:objetivos-tareas} de acuerdo a su descripción en relación a los objetivos.
+
+\subsection*{O.E. 1 Analizar el estado del arte de las redes Tree Parity Machine Multicapa y sus posibles aplicaciones criptográficas.}
+
+\textbf{1.1 Búsqueda de artículos:}  
+Se realizará una búsqueda exhaustiva de artículos científicos utilizando el metabuscador de la UCN y las plataformas Springer, Web of Science, Scopus, IEEE Xplore, APS y ScienceDirect. La búsqueda se enfocará en temas relacionados con redes neuronales, sincronización, criptografía y arquitecturas de Tree Parity Machine. Se establecerán combinaciones de palabras clave tanto en inglés como en español para optimizar los resultados, asegurando una cobertura amplia y relevante.
+
+\textbf{1.2 Clasificación de artículos según su relevancia y año:}  
+Los artículos recopilados serán clasificados según criterios de relevancia y actualidad. Se priorizarán artículos recientes (últimos 10 años) y aquellos con alto impacto, según el número de citaciones y calidad de la revista. Además, se verificará si abordan directamente aspectos de sincronización y arquitectura de redes TPM o sus variantes multicapa.
+
+\textbf{1.3 Discusión de los artículos según su relevancia, en particular focalizándose en los parámetros que definen la arquitectura de una red TPM:}  
+Se desarrollará una discusión crítica entre el estudiante y el tutor, enfocándose en los aspectos técnicos de cada propuesta relevante. Se analizarán los parámetros estructurales como el número de capas, la función de activación, el rango de pesos y el tipo de estímulo utilizado, lo cual permitirá delimitar el marco conceptual de la investigación.
+
+\vspace{1em}
+
+\subsection*{O.E. 2 Diseñar un protocolo de sincronización criptográfica usando redes TPM Multicapa.}
+
+\textbf{2.1 Definir la secuencia de pasos para llevar a cabo el proceso de sincronización entre dos MTPM:}  
+Se especificará detalladamente la secuencia lógica del proceso de sincronización, estableciendo roles, flujos de datos, condiciones de inicio y término, así como protocolos de comunicación. Este proceso servirá como base para futuras fases de implementación y prueba.
+
+\textbf{2.2 Comparar el diseño frente a algoritmos de sincronización de una sola capa:}  
+Se realizará una comparación estructurada entre el protocolo propuesto y algoritmos clásicos de sincronización basados en una única capa TPM. El análisis incluirá ventajas, desventajas, complejidad computacional y capacidad de resistencia frente a ataques.
+
+\vspace{1em}
+
+\subsection*{O.E. 3 Implementar una herramienta de simulación para el protocolo propuesto.}
+
+\textbf{3.1 Seleccionar las herramientas, lenguajes de programación y librerías necesarias para desarrollar el algoritmo propuesto:}  
+Se realizará un estudio de herramientas y entornos de desarrollo adecuados (como Python, NumPy, Matplotlib, etc.), evaluando su compatibilidad con la simulación de redes neuronales, su capacidad de visualización y su facilidad de integración con bases de datos.
+
+\textbf{3.2 Desarrollar un software de simulación, para determinar un rango de parámetros óptimos para el caso de estudio, que definen la estructura de la Multilayer Tree Parity Machine:}  
+Se desarrollará un motor de simulación capaz de ejecutar múltiples configuraciones de MTPM, permitiendo medir su desempeño y determinar valores óptimos para parámetros como número de capas, longitud de peso, rango sináptico y tipo de estímulo. Este motor debe registrar los resultados de forma estructurada para su posterior análisis.
+
+\textbf{3.3 Desarrollar software para el análisis de los resultados de las simulaciones de sincronización:}  
+Se desarrollarán herramientas de visualización y análisis estadístico, como generación de histogramas, gráficos de convergencia y análisis de éxito de sincronización. Esto facilitará la interpretación de los datos generados por el simulador y permitirá comparar distintas configuraciones de manera objetiva.
+
+\vspace{1em}
+
+\subsection*{O.E. 4 Evaluar el rendimiento del algoritmo propuesto mediante simulación.}
+
+\textbf{4.1 Definir las métricas de evaluación del rendimiento del algoritmo, en términos de las iteraciones necesarias para lograr la sincronización y el porcentaje de éxito para un atacante:}  
+Se establecerán métricas cuantitativas clave como el número de iteraciones de aprendizaje requeridas para lograr sincronización, la tasa de éxito de sincronización y la vulnerabilidad frente a un atacante pasivo o activo. Estas métricas permitirán evaluar la eficiencia y seguridad del modelo propuesto.
+
+\textbf{4.2 Evaluar el rendimiento para las arquitecturas de redes MTPM, mediante el uso del software de simulación desarrollado:}  
+Se utilizará el simulador implementado para analizar múltiples configuraciones de MTPM, identificando aquellas que logran sincronización en menor tiempo, con mayor estabilidad y menor susceptibilidad a ataques.
+
+\textbf{4.4 Análisis de los resultados experimentales y comparar resultados entre escenarios propuestos:}  
+Se elaborará un análisis comparativo entre distintos escenarios experimentales, considerando cambios en la topología, estímulo, profundidad o función de activación. Los resultados serán comparados estadísticamente, destacando las arquitecturas más eficientes y robustas.

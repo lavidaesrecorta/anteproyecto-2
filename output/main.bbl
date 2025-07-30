@@ -1,0 +1,114 @@
+\begin{thebibliography}{10}
+
+\bibitem{greenbergCrashOverrideMalware2017}
+A.~Greenberg, ```{{Crash Override}}': {{The Malware That Took Down}} a {{Power Grid}},'' June 2017.
+
+\bibitem{ibmCostDataBreach2023}
+IBM, ``Cost of a {{Data Breach Report}} 2023,'' tech. rep., 2023.
+
+\bibitem{jinUnderstandingIoTSecurity2022}
+X.~Jin, S.~Manandhar, K.~Kafle, Z.~Lin, and A.~Nadkarni, ``Understanding {{IoT Security}} from a {{Market-Scale Perspective}},'' in {\em Proceedings of the 2022 {{ACM SIGSAC Conference}} on {{Computer}} and {{Communications Security}}}, {{CCS}} '22, (New York, NY, USA), pp.~1615--1629, Association for Computing Machinery, 2022.
+
+\bibitem{jironAPLICACIONESREDESNEURONALES2023}
+I.~Jir{\'o}n, ``{{APLICACIONES DE REDES NEURONALES ARTIFICIALES EN CIBERSEGURIDAD}},'' in {\em {{XXXI COMCA}}}, (Antofagasta, Chile), Universidad Cat{\'o}lica del Norte, Aug. 2023.
+
+\bibitem{schweitzer-2002}
+D.~Schweitzer, {\em Internet Security Made Easy}.
+\newblock Amacom Books, Jan. 2002.
+
+\bibitem{paar-2011}
+C.~Paar and J.~Pelzl, {\em Understanding Cryptography. {{A}} Textbook for Students and Practitioners}.
+\newblock Springer, Oct. 2011.
+
+\bibitem{barker-2019}
+E.~Barker and A.~Roginsky, ``Transitioning the use of cryptographic algorithms and key lengths,'' tech. rep., Mar. 2019.
+
+\bibitem{ruttor_neural_2006}
+A.~Ruttor, ``Neural synchronization and cryptography,'' Jan. 2006.
+
+\bibitem{haykin-2009}
+S.~S. Haykin, {\em Neural Networks and Learning Machines}.
+\newblock Prentice Hall, Jan. 2009.
+
+\bibitem{coarfa-2006}
+C.~Coarfa, P.~Druschel, and D.~S. Wallach, ``Performance analysis of {{TLS}} web servers,'' {\em ACM Transactions on Computer Systems}, vol.~24, pp.~39--69, Feb. 2006.
+
+\bibitem{teodoroFPGABasedPerformanceEvaluation2021}
+A.~A.~M. Teodoro, O.~S.~M. Gomes, M.~Saadi, B.~A. Silva, R.~L. Rosa, and D.~Z. Rodr{\'i}guez, ``An {{FPGA-Based Performance Evaluation}} of {{Artificial Neural Network Architecture Algorithm}} for {{IoT}},'' {\em Wireless Personal Communications}, vol.~127, pp.~1085--1116, May 2021.
+
+\bibitem{suarez-albelaPracticalPerformanceComparison2018}
+M.~Su\'arez-Albela, T.~M. Fern\'andez-Caram\'es, P.~Fraga-Lamas, and L.~Castedo, ``A {{Practical Performance Comparison}} of {{ECC}} and {{RSA}} for {{Resource-Constrained IoT Devices}},'' in {\em 2018 {{Global Internet}} of {{Things Summit}} ({{GIoTS}})}, pp.~1--6, 2018.
+
+\bibitem{aghiliSecLAPSecureLightweight2019}
+S.~F. Aghili, H.~Mala, P.~Kaliyar, and M.~Conti, ``{{SecLAP}}: {{Secure}} and lightweight {{RFID}} authentication protocol for {{Medical IoT}},'' {\em Future Generation Computer Systems}, vol.~101, pp.~621--634, 2019.
+
+\bibitem{krishnasrijaLightweightMutualTransitive2023}
+R.~Krishnasrija, A.~K. Mandal, and A.~Cortesi, ``A lightweight mutual and transitive authentication mechanism for {{IoT}} network,'' {\em Ad Hoc Networks}, vol.~138, p.~103003, 2023.
+
+\bibitem{yangIBASecureEfficient2023}
+S.~Yang, X.~Zheng, G.~Liu, and X.~Wang, ``{{IBA}}: {{A}} secure and efficient device-to-device interaction-based authentication scheme for {{Internet}} of {{Things}},'' {\em Computer Communications}, vol.~200, pp.~171--181, 2023.
+
+\bibitem{dongNeuralCryptographyBased2020}
+T.~Dong and T.~Huang, ``Neural cryptography based on {{Complex-Valued Neural Network}},'' {\em IEEE transactions on neural networks and learning systems}, vol.~31, pp.~4999--5004, Nov. 2020.
+
+\bibitem{sarkarArtificialNeuralSynchronization2021}
+A.~Sarkar, M.~Z. Khan, M.~M. Singh, A.~Noorwali, C.~Chakraborty, and S.~K. Pani, ``Artificial {{Neural Synchronization Using Nature Inspired Whale Optimization}},'' {\em IEEE ACCESS}, vol.~9, pp.~16435--16447, 2021.
+
+\bibitem{sarkarChaosBasedMutualSynchronization2021}
+A.~Sarkar, ``Chaos-{{Based}} mutual synchronization of {{Three-Layer Tree}} parity {{Machine}}: A session key exchange protocol over public channel,'' {\em Arabian Journal for Science and Engineering}, vol.~46, pp.~8565--8584, Apr. 2021.
+
+\bibitem{stypinskiSynchronizationTreeParity2022}
+M.~Stypi{\'n}ski and M.~Niemiec, ``Synchronization of tree parity machines using nonbinary input vectors,'' {\em IEEE transactions on neural networks and learning systems}, pp.~1--7, Jan. 2022.
+
+\bibitem{kinzel2002interactingneuralnetworkscryptography}
+W.~Kinzel and I.~Kanter, ``Interacting neural networks and cryptography,'' 2002.
+
+\bibitem{PhysRevE.66.066135}
+M.~{Rosen-Zvi}, E.~Klein, I.~Kanter, and W.~Kinzel, ``Mutual learning in a tree parity machine and its application to cryptography,'' {\em Physical Review E: Statistical Physics, Plasmas, Fluids, and Related Interdisciplinary Topics}, vol.~66, p.~066135, Dec. 2002.
+
+\bibitem{10.1007/3-540-36178-2_18}
+A.~Klimov, A.~Mityagin, and A.~Shamir, ``Analysis of neural cryptography,'' in {\em Advances in Cryptology --- {{ASIACRYPT}} 2002} (Y.~Zheng, ed.), (Berlin, Heidelberg), pp.~288--298, Springer Berlin Heidelberg, 2002.
+
+\bibitem{doi:10.1142/9789812704634_0044}
+{\relax IDO}.~KANTER and {\relax WOLFGANG}.~KINZEL, ``The theory of neural networks and cryptography,'' in {\em The Physics of Communication}, pp.~631--642.
+
+\bibitem{chen-2005}
+T.~Chen, B.~Chen, and C.~Jiamei, ``A novel {{Identity-Based}} key issuing scheme based on interacting neural network,'' in {\em Lecture Notes in Computer Science}, pp.~637--642, Jan. 2005.
+
+\bibitem{Ruttor_2005}
+A.~Ruttor, W.~Kinzel, and I.~Kanter, ``Neural cryptography with queries,'' {\em Journal of Statistical Mechanics: Theory and Experiment}, vol.~2005, p.~P01009, Jan. 2005.
+
+\bibitem{ruttorDynamicsNeuralCryptography2007}
+A.~Ruttor, W.~Kinzel, and I.~Kanter, ``Dynamics of neural cryptography,'' {\em Physical Review E}, vol.~75, May 2007.
+
+\bibitem{shishniashviliEnhancingIoTSecurity2020}
+E.~Shishniashvili, L.~Mamisashvili, and L.~Mirtskhulava, ``Enhancing {{IoT}} security using multi-layer feedforward neural network with tree parity machine elements,'' {\em International Journal of Simulation Systems Science \& Technology}, Mar. 2020.
+
+\bibitem{jeongNeuralCryptographyBased2021}
+S.~Jeong, C.~Park, D.~Hong, C.~Seo, and N.~Jho, ``Neural {{Cryptography Based}} on {{Generalized Tree Parity Machine}} for {{Real-Life Systems}},'' {\em Security and Communication Networks}, vol.~2021, pp.~1--12, Feb. 2021.
+
+\bibitem{dey-2023}
+J.~Dey and A.~Bhowmik, ``Concurring of neural machines for robust session key generation and validation in telecare health system during {{COVID-19}} pandemic,'' {\em Wireless Personal Communications}, vol.~130, pp.~1885--1904, Apr. 2023.
+
+\bibitem{inbook}
+P.~Kumar, D.~N. Singhal, and K.~Chaitra, ``Securing mobile agents migration using tree parity machine with new tiny encryption algorithm,'' pp.~129--138, July 2020.
+
+\bibitem{secret_img}
+M.~Gupta, M.~Gupta, and M.~Deshmukh, ``Single secret image sharing scheme using neural cryptography,'' {\em Multimedia Tools and Applications}, vol.~79, May 2020.
+
+\bibitem{group_key_2020}
+K.~S. S.~Santhanalakshmi and G.~K. Patra, ``Design of group key agreement protocol using neural key synchronization,'' {\em Journal of Interdisciplinary Mathematics}, vol.~23, no.~2, pp.~435--451, 2020.
+
+\bibitem{65_CMOS}
+H.~G{\'o}mez, {\'O}.~Reyes, and E.~Roa, ``A fully synthesized key establishment core based on tree parity machines in 65nm {{CMOS}},'' in {\em 2016 12th Conference on {{Ph}}.{{D}}. Research in Microelectronics and Electronics ({{PRIME}})}, pp.~1--4, 2016.
+
+\bibitem{chenTreeParityMachinebased2008}
+T.~Chen and S.~H. Huang, ``Tree parity machine-based {{One-Time Password}} authentication schemes,'' in {\em 2008 {{IEEE International Joint Conference}} on {{Neural Networks}} ({{IEEE World Congress}} on {{Computational Intelligence}})}, pp.~257--261, 2008.
+
+\bibitem{muhlbachSecureAuthenticatedCommunication2007}
+S.~Muhlbach and S.~Wallner, ``Secure and {{Authenticated Communication}} in {{Chip-Level Microcomputer Bus Systems}} with {{Tree Parity Machines}},'' in {\em 2007 {{International Conference}} on {{Embedded Computer Systems}}: {{Architectures}}, {{Modeling}} and {{Simulation}}}, pp.~201--208, 2007.
+
+\bibitem{secure_ad_hoc}
+B.~Saballus, M.~Volkmer, and S.~Wallner, ``Secure group communication in ad-hoc networks using tree parity machines,'' Jan. 2007.
+
+\end{thebibliography}
